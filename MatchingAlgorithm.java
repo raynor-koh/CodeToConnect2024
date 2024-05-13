@@ -5,7 +5,7 @@ public class MatchingAlgorithm {
   public ArrayList<Order> orders;
   public HashMap<Instrument, PriorityQueue<Order>> buyPQMap;
   public HashMap<Instrument, PriorityQueue<Order>> sellPQMap;
-
+  public int startContinuousIndex;
 
   public MatchingAlgorithm(String instrumentsCSV, String clientsCSV, String ordersCSV) {
     Instrument.readcsv(instrumentsCSV);
@@ -16,6 +16,34 @@ public class MatchingAlgorithm {
       buyPQMap.put(x, buyTemp);
       sellPQMap.put(x, sellTemp);
     }
+  }
+
+  public void continuous() {
+    for (int i=startContinuousIndex; i < orders.size(); i++) {
+      Order order = orders.get(i);
+      if (order == null) {
+        break;
+      }
+      //add into PQ of either buy or sell
+      //get the instrument id and run the match on instrument ID
+      Instrument instrument = order.instrument;
+      this.match(instrument);
+    }
+  }
+
+  public void match(Instrument instrument) {
+    if (!buyPQMap.containsKey(instrument) || !sellPQMap.containsKey(instrument) || buyPQMap.get(instrument).isEmpty() || sellPQMap.get(instrument).isEmpty()) {
+      return;
+    }
+    Order buyOrder = buyPQMap.get(instrument).poll();
+    Order sellOrder = sellPQMap.get(instrument).poll();
+
+    ArrayList<Order> tempPoppedOrders = new ArrayList<>();
+
+    while (true) {
+      
+    }
+    
   }
 
   public boolean checkInstrumentExists(Order order) {
