@@ -10,7 +10,7 @@ public class Order {
     public Client client;
     public double price;
     public boolean side;   // True: Buyer, False: Seller
-    public static HashSet<Order> orderHashSet;
+    public static HashSet<Order> orderHashSet = new HashSet<>();
 
     public static void readcsv(String csvFilename) {
         String line = "";
@@ -25,7 +25,8 @@ public class Order {
                 }
 
                 String[] l = line.split(splitBy);
-                LocalTime time = LocalTime.parse(l[0]);
+                LocalTime time = LocalTime.parse("10:15:45");
+                // LocalTime time = LocalTime.parse(l[0;
                 String id = l[1];
                 Instrument instrument = Instrument.instrumentHashMap.get(l[2]);
                 int quantity = Integer.parseInt(l[3]);
@@ -58,5 +59,6 @@ public class Order {
         this.client = client;
         this.price = price;
         this.side = side;
+        this.client = client;
     }
 }

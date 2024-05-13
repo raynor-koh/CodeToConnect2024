@@ -9,7 +9,7 @@ public class Client implements Comparable<Client> {
     public HashMap<Instrument, Integer> position;
     public static HashMap<String, Client> clientHashMap = new HashMap<>();
 
-    public Client (String csvFilename) {
+    public Client(String csvFilename) {
         String line = "";
         String splitBy = ",";
         try {

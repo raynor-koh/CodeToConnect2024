@@ -5,10 +5,10 @@ import java.util.stream.Stream;
 
 public class MatchingAlgorithm {
   public String type; //Auction or Continuous
-  public ArrayList<Order> orders;
-  public HashMap<Instrument, PriorityQueue<Order>> buyPQMap;
-  public HashMap<Instrument, PriorityQueue<Order>> sellPQMap;
-  public int startContinuousIndex;
+  public ArrayList<Order> orders = new ArrayList<>();
+  public HashMap<Instrument, PriorityQueue<Order>> buyPQMap = new HashMap<>();
+  public HashMap<Instrument, PriorityQueue<Order>> sellPQMap = new HashMap<>();
+  public int startContinuousIndex = 0;
   public HashMap<Instrument, Double> instrumentPriceTimesVolume = new HashMap<>();
   public HashMap<Instrument, Double> instrumentVolume = new HashMap<>();
 
@@ -18,6 +18,7 @@ public class MatchingAlgorithm {
 
   public MatchingAlgorithm(String instrumentsCSV, String clientsCSV, String ordersCSV) {
     Instrument.readcsv(instrumentsCSV);
+    new Client(clientsCSV);
     Order.readcsv(ordersCSV);
     for (Instrument x : Instrument.instrumentHashMap.values()) {
       PriorityQueue<Order> buyTemp = new PriorityQueue<>(new BuyOrderComparator());
@@ -232,5 +233,6 @@ public class MatchingAlgorithm {
         ExchangeReportGenerator.addFailedPolicy(order.id, "REJECTED - POSITION CHECK FAILED");
       }
     }
+    ExchangeReportGenerator.generateCSVFile();
   }
 }
