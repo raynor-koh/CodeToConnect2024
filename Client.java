@@ -13,7 +13,7 @@ public class Client implements Comparable<Client> {
         String line = "";
         String splitBy = ",";
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\matth\\Downloads\\DataSets\\example-set\\input_orders.csv"));
+            BufferedReader br = new BufferedReader(new FileReader(csvFilename));
             int rowCount = 0;
             while ((line = br.readLine()) != null) {
                 if (rowCount == 0) {
