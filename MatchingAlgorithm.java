@@ -7,7 +7,8 @@ public class MatchingAlgorithm {
 
   public MatchingAlgorithm(String instrumentsCSV, String clientsCSV, String ordersCSV) {
     Instrument.readcsv(instrumentsCSV);
-    for (Instrument x : Instrument.instrumentHashSet) {
+
+    for (Instrument x : Instrument.instrumentHashMap.values()) {
       PriorityQueue<Order> buyTemp = new PriorityQueue<>(new BuyOrderComparator());
       PriorityQueue<Order> sellTemp = new PriorityQueue<>(new SellOrderComparator());
     }

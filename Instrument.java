@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class Instrument {
-    public static HashSet<Instrument> instrumentHashSet;
+    public static HashMap<String, Instrument> instrumentHashMap;
     public String id;
     public String currency;
     public int lotSize;
@@ -27,7 +27,7 @@ public class Instrument {
                 int lotSize = Integer.parseInt(l[2]);
 
                 Instrument instrument = new Instrument(id, currency, lotSize);
-                instrumentHashSet.add(instrument);
+                instrumentHashMap.put(id, instrument);
                 rowCount++;
             }
         } catch (IOException e) {
