@@ -208,6 +208,14 @@ public class MatchingAlgorithm {
     return true;
   }
 
+  public void openAuctionMatch(Instrument instrument) {
+    double openPrice = findOpenPrice(instrument);
+    List<Order> auction = Stream.of((Order[]) Order.orderHashSet.toArray())
+            .filter(x -> x.instrument.equals(instrument))
+            .filter(x -> x.time.compareTo(LocalTime.of(9,30,0)) < 0)
+            .collect(Collectors.toList());
+  }
+
   public static void main(String[] args) {
     MatchingAlgorithm x = new MatchingAlgorithm();
   }
