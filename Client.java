@@ -4,7 +4,7 @@ import java.util.*;
 public class Client implements Comparable<Client> {
 
     public String id;
-    public ArrayList<String> currencies;
+    public HashSet<String> currencies;
     public boolean positionCheck;
     public int rating;
     public HashMap<Instrument, Integer> position;
@@ -24,7 +24,7 @@ public class Client implements Comparable<Client> {
 
                 String[] l = line.split(splitBy);
                 String id = l[0];
-                ArrayList<String> currencies = new ArrayList<>();
+                HashSet<String> currencies = new HashSet<>();
                 for (int i = 1; i <= l.length - 3; i++) {
                     currencies.add(l[i].replace("\"", ""));
                 }
@@ -41,7 +41,7 @@ public class Client implements Comparable<Client> {
     }
 
 
-    public Client(String id, ArrayList<String> currencies, boolean positionCheck, int rating) {
+    public Client(String id, HashSet<String> currencies, boolean positionCheck, int rating) {
         this.id = id;
         this.currencies = currencies;
         this.positionCheck = positionCheck;
