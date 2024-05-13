@@ -1,4 +1,7 @@
-import java.util.*; 
+import java.util.*;
+import java.time.LocalTime;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MatchingAlgorithm {
   public String type; //Auction or Continuous
@@ -8,6 +11,10 @@ public class MatchingAlgorithm {
   public int startContinuousIndex;
   public HashMap<Instrument, Double> instrumentPriceTimesVolume = new HashMap<>();
   public HashMap<Instrument, Double> instrumentVolume = new HashMap<>();
+
+  public MatchingAlgorithm() {
+
+  }
 
   public MatchingAlgorithm(String instrumentsCSV, String clientsCSV, String ordersCSV) {
     Instrument.readcsv(instrumentsCSV);
@@ -32,6 +39,80 @@ public class MatchingAlgorithm {
       this.match(instrument);
 
     }
+  }
+
+  public double findOpenPrice(Instrument instrument) {
+    Object[] array = Order.orderHashSet.toArray();
+    Order[] xs = (Order[]) array;
+    Arrays.sort(xs, Comparator.comparing(x -> x.time));
+    List<Order> ys = Stream.of(xs)
+                                .filter(x -> x.instrument.equals(instrument))
+                                .filter(x -> x.time.compareTo(LocalTime.of(9,30,0)) < 0)
+            .collect(Collectors.toList());
+    // key: price | val: quantity
+    HashMap<Double, Integer> map = new HashMap<>();
+    for (Order order : ys) {
+      double currPrice = order.price;
+      if (currPrice == Double.MAX_VALUE || currPrice == Double.MIN_VALUE) {
+        continue;
+      }
+      ArrayList<Order> buy = new ArrayList<>();
+      ArrayList<Order> sell = new ArrayList<>();
+      for (Order t : ys) {
+        if (t.side) {
+          buy.add(t);
+        } else {
+          sell.add(t);
+        }
+      }
+      buy.sort((x, y) -> (int) (y.price - x.price));
+      sell.sort((x, y) -> (int) (x.price - y.price));
+
+      // Calculate Max Orders Fulfilled
+
+      // Find Buy Floor
+      int buyFloorIndex = Integer.MIN_VALUE;
+      for (int i = 0; i < buy.size(); i++) {
+        if (currPrice > buy.get(i).price) {
+          buyFloorIndex = i;
+          break;
+        }
+      }
+
+      // Find Sell Floor
+      // Find Buy Floor
+      int sellFloorIndex = Integer.MIN_VALUE;
+      for (int i = 0; i < sell.size(); i++) {
+        if (currPrice > sell.get(i).price) {
+          sellFloorIndex = i;
+          break;
+        }
+      }
+      if (sellFloorIndex == Integer.MIN_VALUE || buyFloorIndex == Integer.MIN_VALUE) {
+        map.put(currPrice, 0);
+        continue;
+      }
+      int buyQty = 0;
+      for (int i = 0; i < buyFloorIndex; i++ ) {
+        buyQty += buy.get(i).quantity;
+      }
+      int sellQty = 0;
+      for (int i = 0; i < sellFloorIndex; i++ ) {
+        sellQty += sell.get(i).quantity;
+      }
+      map.put(currPrice, Math.min(buyQty, sellQty));
+    }
+
+    double openPrice = 0;
+    int maxQty = Integer.MIN_VALUE;
+    for (double price : map.keySet()) {
+        if (map.get(price) > maxQty) {
+          maxQty = map.get(price);
+          openPrice = price;
+        }
+    }
+
+    return openPrice;
   }
 
   public void match(Instrument instrument) {
@@ -85,6 +166,7 @@ public class MatchingAlgorithm {
       this.instrumentVolume.put(instrument, this.instrumentVolume.getOrDefault(instrument, 0.0) + dealingQuantity);
       this.instrumentPriceTimesVolume.put(instrument, this.instrumentPriceTimesVolume.getOrDefault(instrument, 0.0) + dealingQuantity * dealingPrice);
     }
+<<<<<<< Updated upstream
     
     if (buyOrder != null && buyOrder.quantity != 0.0) {
       buyPQMap.get(instrument).add(buyOrder);
@@ -104,6 +186,13 @@ public class MatchingAlgorithm {
 
   public boolean checkInstrumentExists(Order order) {
     return Instrument.instrumentHashMap.containsKey(order.instrument.id);
+=======
+
+  }
+
+  public boolean checkInstrumentExists(Order order) {
+    return Instrument.instrumentHashMap.containsValue(order.instrument);
+>>>>>>> Stashed changes
   }
 
   public boolean checkCurrency(Order order) {
@@ -126,5 +215,7 @@ public class MatchingAlgorithm {
     return true;
   }
 
-  
+  public static void main(String[] args) {
+    MatchingAlgorithm x = new MatchingAlgorithm();
+  }
 }

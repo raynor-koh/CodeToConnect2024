@@ -39,4 +39,12 @@ public class Instrument {
         this.currency = currency;
         this.lotSize = lotSize;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Instrument that = (Instrument) o;
+        return Objects.equals(id, that.id);
+    }
 }
