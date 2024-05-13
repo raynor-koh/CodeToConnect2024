@@ -54,8 +54,9 @@ public class Order {
         this.time = time;
         this.id = id;
         this.instrument = instrument;
-        this.side = side;
-        this.price = price;
         this.quantity = quantity;
+        this.client = client;
+        this.price = price;
+        this.side = side;
     }
 }
