@@ -1,8 +1,7 @@
 public class Instrument {
-
-    private String id;
-    private String currency;
-    private int lotSize;
+    public String id;
+    public String currency;
+    public int lotSize;
 
     public Instrument(String id, String currency, int lotSize) {
         this.id = id;
@@ -11,4 +10,6 @@ public class Instrument {
     }
 
     
+
+
 }
