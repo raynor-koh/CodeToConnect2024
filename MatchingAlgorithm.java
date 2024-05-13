@@ -35,9 +35,13 @@ public class MatchingAlgorithm {
       }
       //add into PQ of either buy or sell
       //get the instrument id and run the match on instrument ID
+      if (order.side) {
+        buyPQMap.get(order.instrument).add(order);
+      } else {
+        sellPQMap.get(order.instrument).add(order);
+      }
       Instrument instrument = order.instrument;
       this.match(instrument);
-
     }
   }
 
