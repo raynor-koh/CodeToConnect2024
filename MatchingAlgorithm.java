@@ -166,7 +166,6 @@ public class MatchingAlgorithm {
       this.instrumentVolume.put(instrument, this.instrumentVolume.getOrDefault(instrument, 0.0) + dealingQuantity);
       this.instrumentPriceTimesVolume.put(instrument, this.instrumentPriceTimesVolume.getOrDefault(instrument, 0.0) + dealingQuantity * dealingPrice);
     }
-<<<<<<< Updated upstream
     
     if (buyOrder != null && buyOrder.quantity != 0.0) {
       buyPQMap.get(instrument).add(buyOrder);
@@ -186,13 +185,7 @@ public class MatchingAlgorithm {
 
   public boolean checkInstrumentExists(Order order) {
     return Instrument.instrumentHashMap.containsKey(order.instrument.id);
-=======
 
-  }
-
-  public boolean checkInstrumentExists(Order order) {
-    return Instrument.instrumentHashMap.containsValue(order.instrument);
->>>>>>> Stashed changes
   }
 
   public boolean checkCurrency(Order order) {
