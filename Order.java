@@ -31,9 +31,6 @@ public class Order {
                 int quantity = Integer.parseInt(l[3]);
                 Client client = Client.clientHashMap.get(l[4]);
                 double price = 0;
-                if (!Objects.equals(l[5], "Market")) {
-                    price = Double.valueOf(l[5]);
-                }
                 boolean side = l[6] == "Buy";
 
                 if (Objects.equals(l[5], "Market") && side) {
