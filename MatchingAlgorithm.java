@@ -3,6 +3,8 @@ import java.util.*;
 public class MatchingAlgorithm {
   public String type; //Auction or Continuous
   public ArrayList<Order> orders;
+  public HashMap<Instrument, PriorityQueue<Order>> buyPQMap;
+  public HashMap<Instrument, PriorityQueue<Order>> sellPQMap;
 
 
   public MatchingAlgorithm(String instrumentsCSV, String clientsCSV, String ordersCSV) {
@@ -11,6 +13,8 @@ public class MatchingAlgorithm {
     for (Instrument x : Instrument.instrumentHashMap.values()) {
       PriorityQueue<Order> buyTemp = new PriorityQueue<>(new BuyOrderComparator());
       PriorityQueue<Order> sellTemp = new PriorityQueue<>(new SellOrderComparator());
+      buyPQMap.put(x, buyTemp);
+      sellPQMap.put(x, sellTemp);
     }
   }
 
