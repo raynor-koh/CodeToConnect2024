@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class Client implements Comparable<Client> {
-
     public String id;
     public HashSet<String> currencies;
     public boolean positionCheck;
