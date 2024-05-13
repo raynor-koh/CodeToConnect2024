@@ -18,10 +18,7 @@ public class Client implements Comparable<Client> {
         return this.rating - comparable.rating;
     }
 
-    public void addInstrument(Instrument instrument, int quantity) throws InvalidLotSizeException {
-        if (quantity % instrument.lotSize != 0) {
-            throw new InvalidLotSizeException();
-        }
+    public void addInstrument(Instrument instrument, int quantity) {
         if (!this.position.containsKey(instrument)) {
             this.position.put(instrument, quantity);
         } else {
