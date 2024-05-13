@@ -6,6 +6,8 @@ public class MatchingAlgorithm {
   public HashMap<Instrument, PriorityQueue<Order>> buyPQMap;
   public HashMap<Instrument, PriorityQueue<Order>> sellPQMap;
   public int startContinuousIndex;
+  public HashMap<Instrument, Double> instrumentPriceTimesVolume = new HashMap<>();
+  public HashMap<Instrument, Double> instrumentVolume = new HashMap<>();
 
   public MatchingAlgorithm(String instrumentsCSV, String clientsCSV, String ordersCSV) {
     Instrument.readcsv(instrumentsCSV);
@@ -28,6 +30,7 @@ public class MatchingAlgorithm {
       //get the instrument id and run the match on instrument ID
       Instrument instrument = order.instrument;
       this.match(instrument);
+
     }
   }
 
@@ -58,10 +61,11 @@ public class MatchingAlgorithm {
           }
         }
       }
+      double dealingPrice = 0.0;
+      double dealingQuantity = 0.0;
       if (buyOrder.price >= sellOrder.price) {
         //compare time
-        double dealingPrice;
-        int dealingQuantity;
+        
         if (buyOrder.time.compareTo(sellOrder.time) > 0) {
           dealingPrice = sellOrder.price;
         } else {
@@ -77,13 +81,29 @@ public class MatchingAlgorithm {
       if (sellOrder.quantity == 0) {
         sellOrder = !sellPQMap.get(instrument).isEmpty() ? sellPQMap.get(instrument).poll() : null;
       }
-      
+
+      this.instrumentVolume.put(instrument, this.instrumentVolume.getOrDefault(instrument, 0.0) + dealingQuantity);
+      this.instrumentPriceTimesVolume.put(instrument, this.instrumentPriceTimesVolume.getOrDefault(instrument, 0.0) + dealingQuantity * dealingPrice);
     }
     
+    if (buyOrder != null && buyOrder.quantity != 0.0) {
+      buyPQMap.get(instrument).add(buyOrder);
+    } 
+    if (sellOrder != null && sellOrder.quantity != 0.0) {
+      sellPQMap.get(instrument).add(sellOrder);
+    }
+    for (int i = 0; i < tempPoppedOrders.size(); i++) {
+      Order order = tempPoppedOrders.get(i);
+      if (order.side) {
+        buyPQMap.get(instrument).add(order);
+      } else {
+        sellPQMap.get(instrument).add(order);
+      }
+    }
   }
 
   public boolean checkInstrumentExists(Order order) {
-    return this.allInstruments.contains(order.instrument);
+    return Instrument.instrumentHashMap.containsKey(order.instrument.id);
   }
 
   public boolean checkCurrency(Order order) {
