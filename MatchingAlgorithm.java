@@ -4,4 +4,5 @@ public class MatchingAlgorithm {
   public MatchingAlgorithm(String type) {
     this.type = type;
   }
+  //added new line
 }
