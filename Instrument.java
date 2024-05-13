@@ -4,14 +4,12 @@ import java.io.*;
 import java.util.*;
 
 public class Instrument {
-    ///sdfssdfsdfs
-    public static HashSet<Instrument> instrumentHashSet;
+    public static HashMap<String, Instrument> instrumentHashMap;
     public String id;
     public String currency;
     public int lotSize;
-    public static HashMap<String, Instrument> instruments = new HashMap<>();
 
-    public Instrument(String csvFilename) {
+    public static void readcsv(String csvFilename) {
         String line = "";
         String splitBy = ",";
         try {
@@ -29,7 +27,7 @@ public class Instrument {
                 int lotSize = Integer.parseInt(l[2]);
 
                 Instrument instrument = new Instrument(id, currency, lotSize);
-                instruments.put(id, instrument);
+                instrumentHashMap.put(id, instrument);
                 rowCount++;
             }
         } catch (IOException e) {
