@@ -40,7 +40,43 @@ public class MatchingAlgorithm {
 
     ArrayList<Order> tempPoppedOrders = new ArrayList<>();
 
-    while (true) {
+    while (!buyPQMap.get(instrument).isEmpty() && !sellPQMap.get(instrument).isEmpty()) {
+      if (buyOrder.price != Double.MAX_VALUE && sellOrder.price != Double.MIN_VALUE && buyOrder.price < sellOrder.price) {
+        break;
+      }
+      while (buyOrder.price == Double.MAX_VALUE && sellOrder.price == Double.MIN_VALUE) {
+        //compare time values
+        if (buyOrder.time.compareTo(sellOrder.time) > 0) {
+          while (!sellPQMap.get(instrument).isEmpty() && sellOrder.price == Double.MIN_VALUE) {
+            tempPoppedOrders.add(sellOrder);
+            sellOrder = sellPQMap.get(instrument).poll();          
+          }
+        } else {
+          while (!buyPQMap.get(instrument).isEmpty() && buyOrder.price == Double.MAX_VALUE) {
+            tempPoppedOrders.add(buyOrder);
+            buyOrder = buyPQMap.get(instrument).poll();          
+          }
+        }
+      }
+      if (buyOrder.price >= sellOrder.price) {
+        //compare time
+        double dealingPrice;
+        int dealingQuantity;
+        if (buyOrder.time.compareTo(sellOrder.time) > 0) {
+          dealingPrice = sellOrder.price;
+        } else {
+          dealingPrice = buyOrder.price;
+        }
+        dealingQuantity = Math.min(buyOrder.quantity, sellOrder.quantity);
+        buyOrder.quantity -= dealingQuantity;
+        sellOrder.quantity -= dealingQuantity;
+      }
+      if (buyOrder.quantity == 0) {
+        buyOrder = !buyPQMap.get(instrument).isEmpty() ? buyPQMap.get(instrument).poll() : null;
+      }
+      if (sellOrder.quantity == 0) {
+        sellOrder = !sellPQMap.get(instrument).isEmpty() ? sellPQMap.get(instrument).poll() : null;
+      }
       
     }
     
