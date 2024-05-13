@@ -15,7 +15,6 @@ public class InstrumentReportGenerator {
     value.add(dayHigh);
     value.add(dayLow);
     InstrumentReportGenerator.rows.put(instrumentID, value);
-
   }
 
   public static void generateCSVFile() {
