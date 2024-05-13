@@ -221,7 +221,7 @@ public class MatchingAlgorithm {
   }
 
   public static void main(String[] args) {
-    MatchingAlgorithm x = new MatchingAlgorithm("C:\\Users\\USER\\Documents\\BOFA\\CodeToConnect2024\\example-set\\input_instruments.csv", "C:\\Users\\USER\\Documents\\BOFA\\CodeToConnect2024\\example-set\\input_clients.csv", "C:\\Users\\USER\\Documents\\BOFA\\CodeToConnect2024\\example-set\\input_orders.csv");
+    MatchingAlgorithm x = new MatchingAlgorithm("C:\\Users\\USER\\Documents\\BOFA\\CodeToConnect2024\\test-set\\input_instruments.csv", "C:\\Users\\USER\\Documents\\BOFA\\CodeToConnect2024\\test-set\\input_clients.csv", "C:\\Users\\USER\\Documents\\BOFA\\CodeToConnect2024\\test-set\\input_orders.csv");
     for (Order order : Order.orderHashSet) {
       if (!x.checkInstrumentExists(order)) {
         ExchangeReportGenerator.addFailedPolicy(order.id, "REJECTED - INSTRUMENT NOT FOUND");
