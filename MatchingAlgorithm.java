@@ -61,5 +61,8 @@ public class MatchingAlgorithm {
     }
 
   }
+
+  public checkInstrumentExists(String)
+
   
 }
