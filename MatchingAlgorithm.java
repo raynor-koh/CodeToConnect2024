@@ -7,10 +7,15 @@ public class MatchingAlgorithm {
   public Clients allClients;
   public Orders addOrders;
 
+  public PriorityQueue<Order> buyOrders;
+  public PriorityQueue<Order> sellOrders;
+
   public MatchingAlgorithm(String instrumentsCSV, String clientsCSV, String ordersCSV) {
-    this.allInstruments = Instruments(instrumentsCSV);
-    this.allClients = Clients(clientsCSV);
-    this.addOrders = Orders(ordersCSV);
+    this.allInstruments = new Instruments(instrumentsCSV);
+    this.allClients = new Clients(clientsCSV);
+    this.addOrders = new Orders(ordersCSV);
+    this.buyOrders = new PriorityQueue<>(new BuyOrderComparator());
+    this.buyOrders = new PriorityQueue<>(new SellOrderComparator());
   }
 
   
