@@ -30,11 +30,19 @@ public class Order {
                 Instrument instrument = Instrument.instrumentHashMap.get(l[2]);
                 int quantity = Integer.parseInt(l[3]);
                 Client client = Client.clientHashMap.get(l[4]);
-                double price = Integer.MAX_VALUE;
+                double price = 0;
                 if (!Objects.equals(l[5], "Market")) {
                     price = Double.valueOf(l[5]);
                 }
                 boolean side = l[6] == "Buy";
+
+                if (Objects.equals(l[5], "Market") && side) {
+                    price = Double.MAX_VALUE;
+                } else if (Objects.equals(l[5], "Market")) {
+                    price = Double.MIN_VALUE;
+                } else {
+                    price = Double.parseDouble(l[5]);
+                }
 
                 Order order = new Order(time, id, instrument, quantity, client, price, side);
                 orderHashSet.add(order);
