@@ -9,4 +9,6 @@ public class Instrument {
         this.currency = currency;
         this.lotSize = lotSize;
     }
+
+    
 }
