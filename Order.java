@@ -1,14 +1,5 @@
 import java.time.LocalTime;
 public class Order {
-<<<<<<< Updated upstream
-    LocalTime time;
-    String orderID;
-    Client client;
-    Instrument instrument;
-    boolean side;   // True: Buyer, False: Seller
-    double price;
-    int quantity;
-=======
     public LocalTime time;
     public String orderID;
     public Client client;
@@ -20,7 +11,6 @@ public class Order {
     public Order() {
 
     }
->>>>>>> Stashed changes
 
     public Order(LocalTime time, String orderID, Instrument instrument, boolean side, int price, int quantity) {
         this.time = time;

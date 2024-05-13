@@ -3,7 +3,6 @@ import java.util.*;
 import java.io.*;
 import java.util.*;
 
-
 public class Instrument {
 
     public static HashSet<Instrument> instrumentHashSet;
@@ -43,6 +42,4 @@ public class Instrument {
         this.currency = currency;
         this.lotSize = lotSize;
     }
-
-    public static void readCSV() {}
 }
