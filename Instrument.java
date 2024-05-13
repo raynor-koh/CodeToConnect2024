@@ -1,10 +1,9 @@
-import java.util.*;
-
 import java.io.*;
 import java.util.*;
 
 public class Instrument {
-    public static HashSet<Instrument> instrumentHashSet;
+
+    public static HashMap<Instrument> instrumentHashSet;
     public String id;
     public String currency;
     public int lotSize;
