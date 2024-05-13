@@ -18,7 +18,7 @@ public class MatchingAlgorithm {
 
   public MatchingAlgorithm(String instrumentsCSV, String clientsCSV, String ordersCSV) {
     Instrument.readcsv(instrumentsCSV);
-
+    Order.readcsv(ordersCSV);
     for (Instrument x : Instrument.instrumentHashMap.values()) {
       PriorityQueue<Order> buyTemp = new PriorityQueue<>(new BuyOrderComparator());
       PriorityQueue<Order> sellTemp = new PriorityQueue<>(new SellOrderComparator());
@@ -189,7 +189,6 @@ public class MatchingAlgorithm {
 
   public boolean checkInstrumentExists(Order order) {
     return Instrument.instrumentHashMap.containsKey(order.instrument.id);
-
   }
 
   public boolean checkCurrency(Order order) {
@@ -221,6 +220,17 @@ public class MatchingAlgorithm {
   }
 
   public static void main(String[] args) {
-    MatchingAlgorithm x = new MatchingAlgorithm();
+    MatchingAlgorithm x = new MatchingAlgorithm("C:\\Users\\USER\\Documents\\BOFA\\CodeToConnect2024\\example-set\\input_instruments.csv", "C:\\Users\\USER\\Documents\\BOFA\\CodeToConnect2024\\example-set\\input_clients.csv", "C:\\Users\\USER\\Documents\\BOFA\\CodeToConnect2024\\example-set\\input_orders.csv");
+    for (Order order : Order.orderHashSet) {
+      if (!x.checkInstrumentExists(order)) {
+        ExchangeReportGenerator.addFailedPolicy(order.id, "REJECTED - INSTRUMENT NOT FOUND");
+      } else if (!x.checkCurrency(order)) {
+        ExchangeReportGenerator.addFailedPolicy(order.id, "REJECTED - MISMATCH CURRENCY");
+      } else if (!x.checkLotSize(order)) {
+        ExchangeReportGenerator.addFailedPolicy(order.id, "REJECTED - INVALID LOT SIZE");
+      } else if (!x.checkPosition(order)) {
+        ExchangeReportGenerator.addFailedPolicy(order.id, "REJECTED - POSITION CHECK FAILED");
+      }
+    }
   }
 }
