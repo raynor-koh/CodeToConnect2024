@@ -1,14 +1,16 @@
-import java.util.ArrayList; 
+import java.util.*; 
 
 public class MatchingAlgorithm {
   public String type; //Auction or Continuous
   public ArrayList<Order> orders;
-  public HashMap<>;
+  public Instruments allInstruments;
+  public Clients allClients;
+  public Orders addOrders;
 
   public MatchingAlgorithm(String instrumentsCSV, String clientsCSV, String ordersCSV) {
-    this.allInstruments = Instrument(instrumentsCSV);
-    this.allClients = Client(clientsCSV);
-    this.addOrders = Order(ordersCSV);
+    this.allInstruments = Instruments(instrumentsCSV);
+    this.allClients = Clients(clientsCSV);
+    this.addOrders = Orders(ordersCSV);
   }
 
   
