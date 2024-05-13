@@ -1,19 +1,49 @@
-import java.util.HashMap;
+import java.io.*;
+import java.util.*;
+
 public class Client implements Comparable<Client> {
 
-    String[] currency;
-    boolean positionCheck;
-    int rating;
-    HashMap<Instrument, Integer> position;
+    public String id;
+    public ArrayList<String> currencies;
+    public boolean positionCheck;
+    public int rating;
+    public HashMap<Instrument, Integer> position;
+    public static HashMap<String, Client> clients = new HashMap<>();
 
-    //this constructor is for taking in a CSV as file
     public Client (String csvFilename) {
-        //initializes a HashMap of all the clients
+        String line = "";
+        String splitBy = ",";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\matth\\Downloads\\DataSets\\example-set\\input_orders.csv"));
+            int rowCount = 0;
+            while ((line = br.readLine()) != null) {
+                if (rowCount == 0) {
+                    rowCount++;
+                    continue;
+                }
+
+                String[] l = line.split(splitBy);
+                String id = l[0];
+                ArrayList<String> currencies = new ArrayList<>();
+                for (int i = 1; i <= l.length - 3; i++) {
+                    currencies.add(l[i].replace("\"", ""));
+                }
+                boolean positionCheck = Objects.equals(l[l.length - 2], "Y");
+                int rating = Integer.parseInt(l[l.length - 1]);
+
+                Client client = new Client(id, currencies, positionCheck, rating);
+                clients.put(id, client);
+                rowCount++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
-    public Client(String[] currency, boolean positionCheck, int rating) {
-        this.currency = currency;
+    public Client(String id, ArrayList<String> currencies, boolean positionCheck, int rating) {
+        this.id = id;
+        this.currencies = currencies;
         this.positionCheck = positionCheck;
         this.rating = rating;
         this.position = new HashMap<>();
