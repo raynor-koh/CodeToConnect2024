@@ -50,7 +50,17 @@ public class MatchingAlgorithm {
     if (bid.price < ask.price) {
       // TODO: IDK WHY PASS
     } else if (bid.price == ask.price) {
-      createTx();
+      createTX(bid, ask, txPrice, txQuantity);
+
+      if (bid.quantity < ask.quantity) {
+        ask.quantity -= bid.quantity;
+        sellOrders.add(ask);
+      } else if (bid.quantity == ask.quantity) {
+        // Removed from PQ
+      } else if (bid.quantity > ask.quantity) {
+        bid.quantity -= ask.quantity;
+        buyOrders.add(bid);
+      }
     }
 
   }

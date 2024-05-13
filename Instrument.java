@@ -1,10 +1,8 @@
-<<<<<<< Updated upstream
-import java.util.*; 
+import java.util.*;
 
-=======
 import java.io.*;
 import java.util.*;
->>>>>>> Stashed changes
+
 
 public class Instrument {
 
@@ -46,5 +44,5 @@ public class Instrument {
         this.lotSize = lotSize;
     }
 
-    public static readCSV
+    public static void readCSV() {}
 }
