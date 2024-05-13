@@ -4,16 +4,23 @@ public class MatchingAlgorithm {
   public String type; //Auction or Continuous
   public ArrayList<Order> orders;
   public Instruments allInstruments;
-  public Clients allClients;
+  public HashMap<String, Client> allClients;
   public Orders allOrders;
+
+  
 
   public PriorityQueue<Order> buyOrders;
   public PriorityQueue<Order> sellOrders;
 
   public MatchingAlgorithm(String instrumentsCSV, String clientsCSV, String ordersCSV) {
+    Instrument(instrumentsCSV);
+    Client(clientsCSV);
+    Order(ordersCSV);
+    
+    this.allClients = Client.clients;
     this.allInstruments = new Instruments(instrumentsCSV);
-    this.allClients = new Clients(clientsCSV);
-    this.allOrders = new Orders(ordersCSV);
+    this.allClients = 
+    this.allOrders = 
     this.buyOrders = new PriorityQueue<>(new BuyOrderComparator());
     this.sellOrders = new PriorityQueue<>(new SellOrderComparator());
   }
