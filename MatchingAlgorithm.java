@@ -3,11 +3,9 @@ import java.util.*;
 public class MatchingAlgorithm {
   public String type; //Auction or Continuous
   public ArrayList<Order> orders;
-  public Instruments allInstruments;
+  public HashSet<Instrument> allInstruments;
   public HashMap<String, Client> allClients;
   public Orders allOrders;
-
-  
 
   public PriorityQueue<Order> buyOrders;
   public PriorityQueue<Order> sellOrders;
@@ -18,8 +16,7 @@ public class MatchingAlgorithm {
     Order(ordersCSV);
     
     this.allClients = Client.clients;
-    this.allInstruments = new Instruments(instrumentsCSV);
-    this.allClients = 
+    this.allInstruments = Instrument.instrumentHashSet;
     this.allOrders = 
     this.buyOrders = new PriorityQueue<>(new BuyOrderComparator());
     this.sellOrders = new PriorityQueue<>(new SellOrderComparator());
@@ -62,7 +59,9 @@ public class MatchingAlgorithm {
 
   }
 
-  public checkInstrumentExists(String)
+  public checkInstrumentExists(Instrument instrument) {
+    return this.allInstruments.contains(instrument);
+  }
 
   
 }
