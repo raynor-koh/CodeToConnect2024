@@ -6,6 +6,12 @@ public class Client implements Comparable<Client> {
     int rating;
     HashMap<Instrument, Integer> position;
 
+    //this constructor is for taking in a CSV as file
+    public Client (String csvFilename) {
+        //initializes a HashMap of all the clients
+    }
+
+
     public Client(String[] currency, boolean positionCheck, int rating) {
         this.currency = currency;
         this.positionCheck = positionCheck;
