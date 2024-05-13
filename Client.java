@@ -8,7 +8,7 @@ public class Client implements Comparable<Client> {
     public boolean positionCheck;
     public int rating;
     public HashMap<Instrument, Integer> position;
-    public static HashMap<String, Client> clients = new HashMap<>();
+    public static HashMap<String, Client> clientHashMap = new HashMap<>();
 
     public Client (String csvFilename) {
         String line = "";
@@ -32,14 +32,13 @@ public class Client implements Comparable<Client> {
                 int rating = Integer.parseInt(l[l.length - 1]);
 
                 Client client = new Client(id, currencies, positionCheck, rating);
-                clients.put(id, client);
+                clientHashMap.put(id, client);
                 rowCount++;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     public Client(String id, HashSet<String> currencies, boolean positionCheck, int rating) {
         this.id = id;

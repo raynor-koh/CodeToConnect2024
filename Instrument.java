@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Instrument {
 
-    public static HashMap<Instrument> instrumentHashSet;
+    public static HashMap<String, Instrument> instrumentHashMap = new HashMap<>();
     public String id;
     public String currency;
     public int lotSize;
@@ -12,7 +12,7 @@ public class Instrument {
         String line = "";
         String splitBy = ",";
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\matth\\Downloads\\DataSets\\example-set\\input_orders.csv"));
+            BufferedReader br = new BufferedReader(new FileReader(csvFilename));
             int rowCount = 0;
             while ((line = br.readLine()) != null) {
                 if (rowCount == 0) {
@@ -26,7 +26,7 @@ public class Instrument {
                 int lotSize = Integer.parseInt(l[2]);
 
                 Instrument instrument = new Instrument(id, currency, lotSize);
-                instrumentHashSet.add(instrument);
+                instrumentHashMap.put(id, instrument);
                 rowCount++;
             }
         } catch (IOException e) {
